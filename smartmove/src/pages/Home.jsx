@@ -10,13 +10,22 @@ export default function Home({ onNavigate }) {
           <div className="logo">SmartMove</div>
           <ul className="nav-links">
             <li onClick={() => onNavigate("services")}>Services</li>
+            <li onClick={() => onNavigate("about")}>About</li>
             <li onClick={() => onNavigate("inventory")}>Inventory</li>
-            <li onClick={() => onNavigate("mymoves")}>My Moves</li>
+            <li onClick={() => onNavigate("find-movers")}>Find Movers</li>
             <li onClick={() => onNavigate("booking")}>Booking</li>
             <li onClick={() => onNavigate("tracking")}>Track</li>
           </ul>
         </div>
+
+        {/* Right Navbar - Roles + Login/Signup */}
         <div className="nav-right">
+          <button className="btn-role" onClick={() => onNavigate("admin")}>
+            Admin
+          </button>
+          <button className="btn-role" onClick={() => onNavigate("mover")}>
+            Mover
+          </button>
           <button className="btn-link" onClick={() => onNavigate("login")}>
             Login
           </button>
@@ -28,8 +37,8 @@ export default function Home({ onNavigate }) {
 
       {/* Hero Section */}
       <section className="hero">
-        <div className="hero-text">
-          <span className="trust-badge">Trusted by 10,000+ customers</span>
+        <div className="hero-left">
+          <div className="hero-logo">SmartMove</div>
           <h1>Your Stress-Free Moving Solution</h1>
           <p>
             Professional moving services that make relocation simple, safe, and
@@ -50,7 +59,7 @@ export default function Home({ onNavigate }) {
             </button>
           </div>
 
-          {/* Features as cards */}
+          {/* Features */}
           <div className="features-cards">
             <div className="feature-card">
               <svg
@@ -123,13 +132,44 @@ export default function Home({ onNavigate }) {
           </div>
         </div>
 
-        <div className="hero-image">
+        <div className="hero-right">
           <img
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
             alt="Modern living room"
           />
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <p>Connect with us:</p>
+        <div className="social-icons">
+          <a href="https://instagram.com" target="_blank" rel="noreferrer">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+              alt="Instagram"
+            />
+          </a>
+          <a href="https://wa.me/1234567890" target="_blank" rel="noreferrer">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+              alt="WhatsApp"
+            />
+          </a>
+          <a href="https://facebook.com" target="_blank" rel="noreferrer">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+              alt="Facebook"
+            />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noreferrer">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/733/733579.png"
+              alt="Twitter"
+            />
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
