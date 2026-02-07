@@ -18,74 +18,117 @@ import Admin from "./pages/Admin";
 import MoverDashboard from "./pages/MoverDashboard";
 import ClientDashboard from "./pages/ClientDashboard";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function App() {
   const [page, setPage] = useState("home");
   const [role, setRole] = useState(null);
   const [selectedMover, setSelectedMover] = useState(null);
 
-  const handleLoginSuccess = (userRole) => {
-    setRole(userRole);
+  /* ----------------------------------
+     Navigation helper
+  ---------------------------------- */
+  const navigate = (nextPage) => {
+    setPage(nextPage);
+  };
 
-    if (userRole === "admin") setPage("admin");
-    if (userRole === "mover") setPage("mover-dashboard");
-    if (userRole === "client") setPage("client-dashboard");
+  /* ----------------------------------
+     Login success handler
+  ---------------------------------- */
+  const handleLoginSuccess = (user) => {
+    setRole(user.role);
+
+    if (user.role === "admin") navigate("admin");
+    else if (user.role === "mover") navigate("mover-dashboard");
+    else navigate("client-dashboard");
+  };
+
+  /* ----------------------------------
+     Page renderer
+  ---------------------------------- */
+  const renderPage = () => {
+    switch (page) {
+      /* Public */
+      case "home":
+        return <Home onNavigate={navigate} />;
+      case "services":
+        return <Services onNavigate={navigate} />;
+      case "about":
+        return <About onNavigate={navigate} />;
+
+      /* Auth */
+      case "login":
+        return <Login onSuccess={handleLoginSuccess} onNavigate={navigate} />;
+      case "signup":
+        return (
+          <Signup onSuccess={() => navigate("login")} onNavigate={navigate} />
+        );
+
+      /* Client */
+      case "client-dashboard":
+        return <ClientDashboard />;
+      case "mymoves":
+        return <MyMoves />;
+      case "inventory":
+        return <Inventory />;
+      case "movers":
+        return (
+          <Movers
+            onBook={(mover) => {
+              setSelectedMover(mover);
+              navigate("booking");
+            }}
+          />
+        );
+      case "booking":
+        return (
+          <Booking
+            selectedMover={selectedMover}
+            onConfirm={(details) => {
+              setSelectedMover(null);
+              navigate("mymoves");
+            }}
+          />
+        );
+
+      /* Map */
+      case "map":
+        return <MapView />;
+
+      /* Role dashboards */
+      case "admin":
+        return role === "admin" ? <Admin /> : <Home onNavigate={navigate} />;
+      case "mover-dashboard":
+        return role === "mover" ? (
+          <MoverDashboard />
+        ) : (
+          <Home onNavigate={navigate} />
+        );
+
+      default:
+        return <Home onNavigate={navigate} />;
+    }
   };
 
   return (
     <AuthProvider>
       <div className="app">
-        <Header onNavigate={setPage} active={page} role={role} />
+        <Header onNavigate={navigate} active={page} role={role} />
 
-        <main className="container">
-          {/* Public pages */}
-          {page === "home" && <Home onNavigate={setPage} />}
-          {page === "services" && <Services onNavigate={setPage} />}
-          {page === "about" && <About onNavigate={setPage} />}
+        <main className="container">{renderPage()}</main>
 
-          {/* Auth */}
-          {page === "login" && (
-            <Login onSuccess={handleLoginSuccess} onNavigate={setPage} />
-          )}
-
-          {page === "signup" && (
-            <Signup onSuccess={() => setPage("login")} onNavigate={setPage} />
-          )}
-
-          {/* Client flow */}
-          {page === "client-dashboard" && <ClientDashboard />}
-          {page === "mymoves" && <MyMoves />}
-          {page === "inventory" && <Inventory />}
-
-          {page === "movers" && (
-            <Movers
-              onBook={(mover) => {
-                setSelectedMover(mover);
-                setPage("booking");
-              }}
-            />
-          )}
-
-          {page === "booking" && (
-            <Booking
-              selectedMover={selectedMover}
-              onConfirm={(details) => {
-                alert(
-                  `Booking confirmed with ${
-                    details.mover?.name || "N/A"
-                  } on ${details.date}`,
-                );
-                setSelectedMover(null);
-                setPage("mymoves");
-              }}
-            />
-          )}
-
-          {page === "map" && <MapView />}
-
-          {/* Role dashboards */}
-          {page === "admin" && role === "admin" && <Admin />}
-          {page === "mover-dashboard" && role === "mover" && <MoverDashboard />}
-        </main>
+        {/* 🔔 Toast Notifications */}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+          draggable
+          theme="light"
+        />
       </div>
     </AuthProvider>
   );
