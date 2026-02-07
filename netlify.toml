@@ -1,6 +1,7 @@
 [build]
+  base = "smartmove"
   command = "npm install && npm run build"
-  publish = "smartmove/dist"
+  publish = "dist"
 
 [[redirects]]
   from = "/*"
