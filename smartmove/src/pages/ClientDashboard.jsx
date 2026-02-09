@@ -209,6 +209,38 @@ export default function ClientDashboard({ onNavigate }) {
           </button>
         </div>
       </section>
+
+      <section className="client-section">
+        <h2>Quick Actions</h2>
+        <div className="action-buttons">
+          <button
+            className="action-btn"
+            onClick={() => {
+              toast.success("🚚 Taking you to book a move...");
+              setTimeout(() => onNavigate("movers"), 600);
+            }}
+          >
+            Book a Move
+          </button>
+          <button
+            className="action-btn"
+            onClick={() => {
+              toast.success("📍 Loading your move tracking...");
+              setTimeout(() => onNavigate("map"), 600);
+            }}
+          >
+            Track Move
+          </button>
+          <button
+            className="action-btn contact-btn"
+            onClick={() => {
+              toast.info("📞 Support team will contact you shortly");
+            }}
+          >
+            Contact Support
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
