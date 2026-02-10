@@ -7,7 +7,7 @@ import {
   FiMessageCircle,
   FiArrowLeft,
   FiSend,
-  FiRobot,
+  FiCpu,
   FiX,
 } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
@@ -147,7 +147,7 @@ export default function Support({ onNavigate }) {
         </div>
 
         <div className="contact-card chat">
-          <FiRobot className="contact-icon" />
+          <FiCpu className="contact-icon" />
           <h3>AI Assistant</h3>
           <button className="btn-ai-chat" onClick={() => setShowAIChat(true)}>
             Start Chat
