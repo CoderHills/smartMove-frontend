@@ -9,7 +9,7 @@ export default defineConfig({
     tailwind(), // add the Tailwind plugin
   ],
   build: {
-    outDir: "../../build", // Output to backend's build directory
+    outDir: "dist", // Output to dist folder for Render
     emptyOutDir: true,
   },
   server: {
