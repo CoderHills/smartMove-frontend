@@ -1,4 +1,10 @@
 // API configuration based on environment
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
+// For local development, requests are proxied to localhost:5001 via Vite config
+// For production, requests go directly to the deployed backend
+const isProduction = import.meta.env.PROD;
+
+const API_BASE_URL = isProduction 
+  ? "https://smartmove-backend-nmzy.onrender.com/api" 
+  : "/api";
 
 export { API_BASE_URL };
